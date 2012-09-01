@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/gokyle/gomon/monitor"
-        "math/rand"
-        "os"
+	"math/rand"
+	"os"
 	"time"
 )
 
@@ -31,10 +31,10 @@ func run() error {
 	var err error
 	fmt.Println("[+] entering run loop")
 	for {
-                rand.Seed(time.Now().UnixNano())
+		rand.Seed(time.Now().UnixNano())
 		n := rand.Intn(4)
-                should_break := false
-                fmt.Println("[+] start run loop")
+		should_break := false
+		fmt.Println("[+] start run loop")
 
 		switch n {
 		case 0:
@@ -43,24 +43,24 @@ func run() error {
 			err = bad_job()
 		case 2:
 			err = panic_job()
-                case 3:
-                        err = nil
-                        fmt.Println("[+] returning")
-                        should_break = true
+		case 3:
+			err = nil
+			fmt.Println("[+] returning")
+			should_break = true
 		default:
 			return nil
 		}
 
-                if err != nil {
-                        fmt.Println("[!] error detected")
-                } else {
-                        fmt.Println("[+] no errors")
-                }
+		if err != nil {
+			fmt.Println("[!] error detected")
+		} else {
+			fmt.Println("[+] no errors")
+		}
 
-                if should_break {
-                        fmt.Println("[+] breaking")
-                        break
-            }
+		if should_break {
+			fmt.Println("[+] breaking")
+			break
+		}
 	}
 
 	fmt.Println("[+] finished.")
@@ -68,14 +68,14 @@ func run() error {
 }
 
 func main() {
-        if len(os.Args) > 1 && os.Args[1] == "persist" {
-                monitor.CanExit = false
-        }
-        monitor.ConfigFile = "monitor.json"
-        err := monitor.ConfigFromJson()
-        if err != nil {
-                fmt.Println("[!] error configuring monitor: ", err)
-                os.Exit(1)
-        }
+	if len(os.Args) > 1 && os.Args[1] == "persist" {
+		monitor.CanExit = false
+	}
+	monitor.ConfigFile = "monitor.json"
+	err := monitor.ConfigFromJson()
+	if err != nil {
+		fmt.Println("[!] error configuring monitor: ", err)
+		os.Exit(1)
+	}
 	monitor.Monitor(run)
 }
