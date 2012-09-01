@@ -1,25 +1,30 @@
 package monitor
 
 import (
+        "errors"
         "fmt"
         "log"
 )
+
+const config_file = "monitor.json"
 
 type Panicked struct {
         panicked bool
 }
 
+var CanExit = true
 var notifications = make(map[string]bool)
 
 func notify(err error) {
-        log.Printf("[!] MONITOR critical failure: %s\n", err)
+        log.Println("[!] MONITOR critical failure: ", err.Error())
 }
 
 func monitorTarget(target (func () error), panicked *Panicked) error {
         var err error = nil
+
         defer func() {
                 if rec := recover(); rec != nil {
-                        err = fmt.Errorf("panic recovery: ", rec)
+                        err = errors.New(fmt.Sprintf("panic recovery: ", rec))
                         panicked.panicked = true
                         notify(err) 
                 } else {
@@ -46,7 +51,9 @@ func Monitor(target (func () error)) {
                 }
                 if err == nil && !panicked.panicked {
                         log.Println("[+] nominal exit")
-                        break
+                        if CanExit {
+                                break
+                        }
                 } 
                 panicked.panicked = false
         }
