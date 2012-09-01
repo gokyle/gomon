@@ -71,6 +71,11 @@ func main() {
         if len(os.Args) > 1 && os.Args[1] == "persist" {
                 monitor.CanExit = false
         }
-
+        monitor.ConfigFile = "email.json"
+        err := monitor.ConfigFromJson()
+        if err != nil {
+                fmt.Println("[!] error configuring monitor: ", err)
+                os.Exit(1)
+        }
 	monitor.Monitor(run)
 }
