@@ -2,7 +2,6 @@ package monitor
 
 import (
         "fmt"
-        "github.com/kisom/gopush_git/pushover"
         "log"
 )
 
@@ -10,7 +9,6 @@ type Panicked struct {
         panicked bool
 }
 
-var identity pushover.Identity
 var notifications = make(map[string]bool)
 
 func notify(err error) {
