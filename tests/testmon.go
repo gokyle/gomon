@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"monitor"
+	"github.com/kisom/gomon/monitor"
         "math/rand"
 	"time"
 )
