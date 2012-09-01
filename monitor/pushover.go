@@ -22,7 +22,6 @@ func DisablePushover() {
 
 func validPushoverConfig(poCfg *pushover.Identity) bool {
 	valid := false
-	log.Println(poCfg)
 	if poCfg != nil && poCfg.Token != "" && poCfg.User != "" {
 		valid = true
 		cfg := pushover.Authenticate(poCfg.Token, poCfg.User)
