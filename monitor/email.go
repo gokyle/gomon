@@ -1,13 +1,16 @@
 package monitor
 
 import (
-        "log"
-        "net/smtp"
+        //"log"
+        //"net/smtp"
 )
 
 type mailConfig struct {
         server string
-
+        user string
+        pass string
+        address string
+}
 
 
 // EnableEmail enables email notifications
@@ -21,5 +24,5 @@ func DisableEmail() {
 }
 
 func LoadMailConfig(filename string) error {
-
+        return nil
 }
