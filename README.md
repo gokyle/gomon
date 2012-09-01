@@ -62,7 +62,7 @@ You may include only one of the two sections to enable that type of
 notifications. By default, `monitor` looks for `monitor.json` in the
 same directory as the code is being run from.
 
-```golang
+```go
         err := monitor.ConfigFromJson()
         if err != nil {
                 fmt.Println("[!] error configuring monitor: ", err)
@@ -73,7 +73,7 @@ same directory as the code is being run from.
 
 The configuration file can be set with the variable `ConfigFile`:
 
-```golang
+```go
 monitor.ConfigFile = "secret.json"
 ```
 
