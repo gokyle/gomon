@@ -26,6 +26,17 @@ func notify(err error) {
                         log.Println("[+] monitor mail notification sent")
                 }
         }
+
+        shouldPush, present := notifications["pushover"]
+        if present && shouldPush {
+                poErr := pushoverNotify(err)
+                if poErr != nil {
+                        log.Println("[!] MONITOR pushover notify failed: ",
+                                    poErr)
+                } else {
+                        log.Println("[+] monitor pushover notification sent")
+                }
+        }
 	log.Println("[!] MONITOR critical failure: ", err.Error())
 }
 
@@ -34,7 +45,7 @@ func monitorTarget(target (func() error), panicked *Panicked) error {
 
 	defer func() {
 		if rec := recover(); rec != nil {
-			err = errors.New(fmt.Sprintf("panic recovery: ", rec))
+                        err = errors.New(fmt.Sprintf("panic recovery: %s", rec))
 			panicked.panicked = true
 			notify(err)
 		} else {

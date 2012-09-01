@@ -1,8 +1,10 @@
 package monitor
 
 import (
+        "fmt"
         "log"
         "net/smtp"
+        "strings"
 )
 
 var mail_config *mailConfig
@@ -10,13 +12,13 @@ var mail_config *mailConfig
 // EnableEmail enables email notifications
 func EnableEmail() {
         log.Println("[+] monitor enabling email notifications")
-	notifications["email"] = true
+	notifications["mail"] = true
 }
 
 // DisableEmail disables email notifications
 func DisableEmail() {
         log.Println("[+] monitor disabling email notifications")
-	notifications["email"] = false
+	notifications["mail"] = false
 }
 
 func validMailConfig(mail *mailConfig) bool {
@@ -33,17 +35,28 @@ func validMailConfig(mail *mailConfig) bool {
         return valid
 }
 
+func stringTo(to []string) string {
+        address := strings.Join(to, ";")
+        return address
+}
+
+func buildMessageBody(err error) string {
+        header := fmt.Sprintf("From: %s\n", mail_config.Address)
+        header += fmt.Sprintf("To: %s\n", strings.Join(mail_config.To, ";"))
+        header += fmt.Sprintf("Subject: monitor alert\n\n")
+        header += err.Error()
+        return header
+}
+
 func mailNotify(err error) error {
         auth := smtp.PlainAuth(mail_config.Address, 
                                mail_config.User,
                                mail_config.Pass,
                                mail_config.Server)        
-        //subject := "monitor alert"
-        body := err.Error()
         err = smtp.SendMail(mail_config.Server + ":" + mail_config.Port,
                             auth,
                             mail_config.User,
                             mail_config.To,
-                            []byte(body))
+                            []byte(buildMessageBody(err)))
         return err
 }

@@ -39,9 +39,20 @@ func loadConfig(filename string) (*jsonConfig, error) {
 
 // ConfigFromJson reads the file specified by ConfigFile
 func ConfigFromJson() error {
+        DisableEmail()
+        DisablePushover()
+
         cfg, err := loadConfig(ConfigFile)
+        if cfg == nil {
+                return err
+        }
+        
         if validMailConfig(&cfg.Mail) {
-                notifications["mail"] = true
+                EnableEmail()
+        }
+
+        if validPushoverConfig(&cfg.Pushover) {
+                EnablePushover()
         }
 
         return err
