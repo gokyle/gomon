@@ -16,27 +16,27 @@ type Panicked struct {
 var CanExit = true
 
 func notify(err error) {
-        shouldMail, present := notifications["mail"]
-        if present && shouldMail {
-                mailErr := mailNotify(err)
-                if mailErr != nil {
-                        log.Println("[!] MONITOR mail notify failed: ",
-                                    mailErr)
-                } else {
-                        log.Println("[+] monitor mail notification sent")
-                }
-        }
+	shouldMail, present := notifications["mail"]
+	if present && shouldMail {
+		mailErr := mailNotify(err)
+		if mailErr != nil {
+			log.Println("[!] MONITOR mail notify failed: ",
+				mailErr)
+		} else {
+			log.Println("[+] monitor mail notification sent")
+		}
+	}
 
-        shouldPush, present := notifications["pushover"]
-        if present && shouldPush {
-                poErr := pushoverNotify(err)
-                if poErr != nil {
-                        log.Println("[!] MONITOR pushover notify failed: ",
-                                    poErr)
-                } else {
-                        log.Println("[+] monitor pushover notification sent")
-                }
-        }
+	shouldPush, present := notifications["pushover"]
+	if present && shouldPush {
+		poErr := pushoverNotify(err)
+		if poErr != nil {
+			log.Println("[!] MONITOR pushover notify failed: ",
+				poErr)
+		} else {
+			log.Println("[+] monitor pushover notification sent")
+		}
+	}
 	log.Println("[!] MONITOR critical failure: ", err.Error())
 }
 
@@ -45,7 +45,7 @@ func monitorTarget(target (func() error), panicked *Panicked) error {
 
 	defer func() {
 		if rec := recover(); rec != nil {
-                        err = errors.New(fmt.Sprintf("panic recovery: %s", rec))
+			err = errors.New(fmt.Sprintf("panic recovery: %s", rec))
 			panicked.panicked = true
 			notify(err)
 		} else {
@@ -55,7 +55,7 @@ func monitorTarget(target (func() error), panicked *Panicked) error {
 
 	err = target()
 	if err != nil {
-                fmt.Println("[+] send notification")
+		fmt.Println("[+] send notification")
 		notify(err)
 	}
 	fmt.Println("[+] returning from target")
