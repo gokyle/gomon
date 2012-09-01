@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gokyle/gomon/monitor"
         "math/rand"
+        "os"
 	"time"
 )
 
@@ -33,7 +34,7 @@ func run() error {
                 rand.Seed(time.Now().UnixNano())
 		n := rand.Intn(4)
                 should_break := false
-                fmt.Println("[+] running")
+                fmt.Println("[+] start run loop")
 
 		switch n {
 		case 0:
@@ -67,5 +68,9 @@ func run() error {
 }
 
 func main() {
+        if len(os.Args) > 1 && os.Args[1] == "persist" {
+                monitor.CanExit = false
+        }
+
 	monitor.Monitor(run)
 }
