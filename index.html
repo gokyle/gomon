@@ -66,6 +66,41 @@ by modifying the CanExit value in the package:</p>
         <span class="n">monitor</span><span class="p">.</span><span class="n">Monitor</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
+
+<h3>Notifications</h3>
+
+<p><code>monitor</code> supports <a href="https://www.pushover.net">Pushover</a> and email 
+notifications. To enable either, you can load the configuration from a
+JSON file:</p>
+
+<div class="highlight"><pre><span class="p">{</span><span class="nt">"mail"</span><span class="p">:</span> 
+    <span class="p">{</span><span class="nt">"port"</span><span class="p">:</span> <span class="s2">"&lt;smtp-port&gt;"</span><span class="p">,</span>
+     <span class="nt">"pass"</span><span class="p">:</span> <span class="s2">"&lt;smtp-password&gt;"</span><span class="p">,</span> 
+     <span class="nt">"user"</span><span class="p">:</span> <span class="s2">"&lt;smtp-user&gt;"</span><span class="p">,</span> 
+     <span class="nt">"address"</span><span class="p">:</span> <span class="s2">"&lt;from-address&gt;"</span><span class="p">,</span> 
+     <span class="nt">"server"</span><span class="p">:</span> <span class="s2">"&lt;smtp-server&gt;"</span><span class="p">,</span>
+     <span class="nt">"to"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"&lt;dev@yourdomain.tld&gt;, &lt;otherdev@theirdomain.tld&gt;"</span><span class="p">]},</span> 
+ <span class="nt">"pushover"</span><span class="p">:</span> 
+    <span class="p">{</span><span class="nt">"token"</span><span class="p">:</span> <span class="s2">"&lt;api-key&gt;"</span><span class="p">,</span> 
+     <span class="nt">"user"</span><span class="p">:</span> <span class="s2">"&lt;user-key&gt;"</span><span class="p">}}</span>
+</pre></div>
+
+<p>You may include only one of the two sections to enable that type of
+notifications. By default, <code>monitor</code> looks for <code>monitor.json</code> in the
+same directory as the code is being run from.</p>
+
+<div class="highlight"><pre>        <span class="n">err</span> <span class="p">:=</span> <span class="n">monitor</span><span class="p">.</span><span class="n">ConfigFromJson</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">err</span> <span class="p">!=</span> <span class="n">nil</span> <span class="p">{</span>
+                <span class="n">fmt</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"[!] error configuring monitor: "</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+                <span class="n">os</span><span class="p">.</span><span class="n">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">monitor</span><span class="p">.</span><span class="n">Monitor</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+</pre></div>
+
+<p>The configuration file can be set with the variable <code>ConfigFile</code>:</p>
+
+<div class="highlight"><pre><span class="n">monitor</span><span class="p">.</span><span class="n">ConfigFile</span> <span class="p">=</span> <span class="s">"secret.json"</span>
+</pre></div>
       </section>
     </div>
 
