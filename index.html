@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>gomon by gokyle</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>gomon</h1>
+        <h2>Basic runtime monitoring and program restart for Go programs.</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/gokyle/gomon/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/gokyle/gomon/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/gokyle/gomon" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h3>Introduction</h3>
+
+<p><code>monitor</code> provides basic runtime monitoring for Go programs. It is
+based on <a href="https://github.com/kisom/pymods/blob/master/monitor.py">monitor.py</a>,
+a Python module originally written to ensure a Bitcoin broker continued
+running even in the face of unanticipated exceptions. </p>
+
+<h3>Overview</h3>
+
+<p>The <code>monitor.Monitor</code> function takes a target function with the signature:</p>
+
+<div class="highlight"><pre><span class="k">func</span> <span class="n">target</span><span class="p">()</span> <span class="n">error</span> <span class="p">{}</span>
+</pre></div>
+
+<p>It is assumed the target function will use configuration files, <code>os.Args</code>,
+environment variables, or some other mechanism to configure itself.</p>
+
+<p>When the target function returns, <code>monitor</code> checks whether an error has
+occurred and whether a panic has occurred, and sends a notification in
+either case. If the function exits with no errors and hasn't panicked,
+<code>monitor</code> assumes the program exits normally. This behaviour may be changed
+by modifying the CanExit value in the package:</p>
+
+<div class="highlight"><pre><span class="n">monitor</span><span class="p">.</span><span class="n">CanExit</span> <span class="p">=</span> <span class="n">false</span>     <span class="c1">// disable exit on clean return</span>
+<span class="n">monitor</span><span class="p">.</span><span class="n">CanExit</span> <span class="p">=</span> <span class="n">true</span>      <span class="c1">// enable exit on clean return</span>
+</pre></div>
+
+<h3>Example Usage</h3>
+
+<div class="highlight"><pre>
+<span class="k">func</span> <span class="n">target</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// self-contained main program code</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">monitor</span><span class="p">.</span><span class="n">Monitor</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
