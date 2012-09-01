@@ -1,7 +1,7 @@
 package monitor
 
 import (
-        "github.com/kisom/gopush_git/pushover"
+        "github.com/gokyle/gopush/pushover"
 )
 
 
