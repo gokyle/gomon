@@ -23,7 +23,7 @@ func DisableEmail() {
 
 // Returns true if email notifications are enabled.
 func EmailEnabled() bool {
-        return notification["mail"]
+        return notifications["mail"]
 }
 
 func validMailConfig(mail *mailConfig) bool {

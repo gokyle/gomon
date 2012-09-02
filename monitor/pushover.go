@@ -21,7 +21,7 @@ func DisablePushover() {
 }
 
 // PushoverEnabled returns true if pushover notifications are enabled.
-func PushoverEnabled() {
+func PushoverEnabled() bool {
         return notifications["pushover"]
 }
 
