@@ -22,7 +22,7 @@ func DisablePushover() {
 
 // PushoverEnabled returns true if pushover notifications are enabled.
 func PushoverEnabled() bool {
-        return notifications["pushover"]
+	return notifications["pushover"]
 }
 
 func validPushoverConfig(poCfg *pushover.Identity) bool {
