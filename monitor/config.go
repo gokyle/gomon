@@ -61,7 +61,7 @@ func ConfigFromJson() error {
 }
 
 // ConfigFromEnv reads the configuration from the environment
-func ConfigFromEnv() error {
+func ConfigFromEnv() {
 	DisableEmail()
 	DisablePushover()
 	m := mailConfig{os.Getenv("MAIL_SERVER"),
