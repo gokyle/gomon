@@ -77,3 +77,30 @@ The configuration file can be set with the variable `ConfigFile`:
 monitor.ConfigFile = "secret.json"
 ```
 
+Alternatively, you can load the configuration from the environment. The
+environment variables support are:
+
+* `MAIL_SERVER`
+* `MAIL_USER`
+* `MAIL_PASS`
+* `MAIL_ADDRESS`
+* `MAIL_PORT`
+* `MAIL_TO` - this should be a comma separated list of address to email
+when notifications go out. For example, "dev1@example.com,dev2@example.com".
+* `PO_APIKEY`
+* `PO_USER`
+
+To load the configuration, call `ConfigFromEnv`:
+
+```go
+        monitor.ConfigFromEnv() 
+
+        // check whether the notifications we expect to be enabled were enabled
+        if monitor.PushoverEnabled() {
+                log.Println("[!] pushover notifications not enabled!")
+        }
+
+        if monitor.EmailEnabled() {
+                log.Println("[!] email notifications not enabled!")
+        }
+```
