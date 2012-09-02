@@ -21,6 +21,11 @@ func DisableEmail() {
 	notifications["mail"] = false
 }
 
+// Returns true if email notifications are enabled.
+func EmailEnabled() bool {
+        return notification["mail"]
+}
+
 func validMailConfig(mail *mailConfig) bool {
 	valid := true
 	if mail.Server == "" || mail.User == "" ||

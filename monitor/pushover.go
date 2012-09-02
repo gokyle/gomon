@@ -14,10 +14,15 @@ func EnablePushover() {
 	notifications["pushover"] = true
 }
 
-// DisableEmail disables email notifications
+// DisablePushover disables email notifications
 func DisablePushover() {
 	log.Println("[+] monitor disabling pushover notifications")
 	notifications["pushover"] = false
+}
+
+// PushoverEnabled returns true if pushover notifications are enabled.
+func PushoverEnabled() {
+        return notifications["pushover"]
 }
 
 func validPushoverConfig(poCfg *pushover.Identity) bool {
