@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"github.com/gokyle/gopush/pushover"
 	"io/ioutil"
+	"os"
+	"strings"
 )
 
 // ConfigFile points to the file containing the configuration data for the
@@ -56,4 +58,27 @@ func ConfigFromJson() error {
 	}
 
 	return err
+}
+
+// ConfigFromEnv reads the configuration from the environment
+func ConfigFromEnv() error {
+	DisableEmail()
+	DisablePushover()
+	m := mailConfig{os.Getenv("MAIL_SERVER"),
+		os.Getenv("MAIL_USER"),
+		os.Getenv("MAIL_PASS"),
+		os.Getenv("MAIL_ADDRESS"),
+		os.Getenv("MAIL_PORT"),
+		strings.Split(os.Getenv("MAIL_TO"), ","),
+	}
+	if validMailConfig(&m) {
+		EnableEmail()
+	}
+
+	p := pushover.Identity{os.Getenv("PO_APIKEY"),
+		os.Getenv("PO_USER"),
+	}
+	if validPushoverConfig(&p) {
+		EnablePushover()
+	}
 }
