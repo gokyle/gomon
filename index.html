@@ -101,6 +101,34 @@ same directory as the code is being run from.</p>
 
 <div class="highlight"><pre><span class="n">monitor</span><span class="p">.</span><span class="n">ConfigFile</span> <span class="p">=</span> <span class="s">"secret.json"</span>
 </pre></div>
+
+<p>Alternatively, you can load the configuration from the environment. The
+environment variables support are:</p>
+
+<ul>
+<li><code>MAIL_SERVER</code></li>
+<li><code>MAIL_USER</code></li>
+<li><code>MAIL_PASS</code></li>
+<li><code>MAIL_ADDRESS</code></li>
+<li><code>MAIL_PORT</code></li>
+<li>
+<code>MAIL_TO</code> - this should be a comma separated list of address to email
+when notifications go out. For example, "<a href="mailto:dev1@example.com">dev1@example.com</a>,<a href="mailto:dev2@example.com">dev2@example.com</a>".</li>
+<li><code>PO_APIKEY</code></li>
+<li><code>PO_USER</code></li>
+</ul><p>To load the configuration, call <code>ConfigFromEnv</code>:</p>
+
+<div class="highlight"><pre>        <span class="n">monitor</span><span class="p">.</span><span class="n">ConfigFromEnv</span><span class="p">()</span> 
+
+        <span class="c1">// check whether the notifications we expect to be enabled were enabled</span>
+        <span class="k">if</span> <span class="n">monitor</span><span class="p">.</span><span class="n">PushoverEnabled</span><span class="p">()</span> <span class="p">{</span>
+                <span class="n">log</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"[!] pushover notifications not enabled!"</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">monitor</span><span class="p">.</span><span class="n">EmailEnabled</span><span class="p">()</span> <span class="p">{</span>
+                <span class="n">log</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"[!] email notifications not enabled!"</span><span class="p">)</span>
+        <span class="p">}</span>
+</pre></div>
       </section>
     </div>
 
